@@ -1,0 +1,43 @@
+php 的数据类型 支持8种基本的数据类型
+  boolean , int , double , float , string , object , null , array , resource 
+  
+常量
+	define( string constant_name , mixed value , case_sensitive=true ) 默认大小写不敏感
+	获取常量的2种办法：1 直接使用constant_name 获取， 2 使用函数 constant( constant_name ) 获取。
+	bool defined( constant_name )  判断常量是否已经被定义  
+变量
+	引用赋值： $i = 1 , $j = &$i , $i=2 ; 
+
+变量域
+	局部变量：
+	全局变量：全局变量可以在任何地方使用，但是不能在自定义函数中调用，如果想要调用那么就必须使用global修饰为全局变量。
+	静态变量：每次调用都会以上次调用的结果为起始
+	eg：
+		fun(){
+			static $i = 0;
+			$i += 1;
+			echo $i;
+		} // echo 1~10
+		fun1(){
+			$i = 0;
+			$i += 1;
+			echo $i;
+		} // echo 10个1
+		for( $k = 0 ; $k < 10 ; $k++){ fun(); fun1(); }
+		
+值传递的3种方式：值传递，引用传递，默认值
+
+变量函数：函数名的调用不是常见的直接输出函数名，而是
+	function come(){ echo 'come';} function go( $name ){ echo 'go'.$name ;}	function back( $name ){ echo $name; }
+	$func = "come"; $func(); //等价come() 
+	$func = "go" ; $func( "pzr" );
+	$func = "back"; $func( "zy" ); 	
+		
+		
+		
+		
+		
+		
+		
+
+  
