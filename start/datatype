@@ -32,6 +32,37 @@ php 的数据类型 支持8种基本的数据类型
 	$func = "come"; $func(); //等价come() 
 	$func = "go" ; $func( "pzr" );
 	$func = "back"; $func( "zy" ); 	
+	
+函数的引用：不仅变量可以引用，函数也是可以引用的。
+	eg： function &func( $name='pzr' ){ echo $name ; } &func("zy");  ==> 最后输出 zy
+	
+命名规范：
+class People{ //类命名：首字母大写，不要用下划线。
+	$mName = ''; //属性以m开头
+	$mAge = '';
+	
+	global $gurl = ''; //全局变量用g开头
+	
+	define('DEFAULT_NAME' , 'name' ); //常量全部大写，以下划线分割。
+	
+	static $sStatus = 1 ; //静态变量以s开头
+	
+	$msPwd = 1; //既是属性，又是静态变量
+	
+	//函数命名 以下划线分割
+	function this_is_good_idea(){
+		...
+	}
+	
+	function SetName( $name ){ //方法参数用驼峰命名
+		$user_name = $name ; //变量命名全部小写，多个单词之间用下划线
+	} 
+	
+	//引用变量/函数命名用r开头
+	function &rGetName( &$rName ){
+		...
+	}
+}
 		
 		
 		
