@@ -1,0 +1,53 @@
+字符串
+	strcmp(str1,str2)
+	strncmp(str1,str2 ,len) 比较前len个字符 
+	strnatcmp(str1,str2) 按自然排序法比较字符串，相等 0,str1>str2 1,str1<str2 -1
+	substr(str,offset,[len] )
+	strlen( str )
+	strstr( string haystack,string needle)  在needle中查找指定字符haystack eg：$str='test.jpg'; $temp=strstr( '.',$str );$temp='.jpg';
+	strchr() 与strstr刚好相反，从字符串后序的位置开始检索子串
+	substr_count( string haystack,string needle ) 子串在字符串中出现的次数。
+	str_ireplace( mixed search,replace,sunject [,int &count ] ) 不区分大小写替换字符
+	str_replace( ) 区分大小写
+	substr_replace( string str, string repl ,int start [,int len] ) 截取字符串的一段进行替换
+	string number_format( float number [, int num_decimal] [, string dec_seperator ,string thousands_seperator]) 格式化数字，第二个参数：保留的小数位 第三个参数：用来替换小数点，第四个参数：用来替换逗号
+	array explode(string separator ,string str [, int limit] ) 分割字符串
+	string implode(string glue,array piece ) 合成字符串，与explode刚好相反
+	
+正则
+	介绍：
+	正则由2部分组成，即元字符和文本字符。元字符即特殊的字符，文本字符即字母和数字
+	^ $ 开始结束
+	\b \B 单词定界符 \btm\b 匹配完整单词的tm \Btm\B 匹配不是完整单词的tm
+	. 换行除外
+	预定义字符集
+		\d 任意一个十进制数字  \D任意一个非十进制数字  
+		\w 任意一个单词字符[a-zA-Z0-9_] \W任意一个非单词字符
+		\s 任意一个空白字符 [\f\n\r\t]   \S任意一个非空白字符
+	限定符
+		\b 单词定界符
+		\B 非单词定界符
+		\A 总是能够匹配待搜索文本的起始位置
+		\Z 表示未指定任何模式下匹配的字符，通常是字符串的末尾位置，或是字符串末尾的换行符之前的位置
+		\z 只匹配字符串的末尾，不考虑任何换行符
+		\G 当前匹配的起始位置
+	反向引用 和()很大关系
+		匹配两个it ： (it)\1
+		匹配两组：([a-z])([A-Z])\1\2
+		别名：(?P<subname>)  引用 (?P=subname)  eg: (?P<first>[a-z]))(?P<second>[A-Z])(?P=first)(?P=second)
+	模式修饰符
+		i (?i)...(?-i) | (?i:...) 忽略大小写模式
+		m (?m)...(?-m) | (?m:...) 多文本模式。字符串内部有多个换行符时，影响^和$的匹配
+		s (?s)...(?-s) | (?s:...) 单文本模式。元字符. 可以匹配换行符 其他不可以
+		x (?x)...(?-x) | (?x:...) 忽略空白字符
+		 eg：匹配tm忽略大小写 /tm/i  | (?i)tm(?-i)  | (?i:tm)
+	正则表达式函数
+		bool ereg(string pattern , string str [,array regs])/eregi  eregi不区分大小写
+		string ereg_replace/eregi_replace( string pattern ,string replacement ,string str )  带i的不区分大小写
+		array split/spliti( string pattern ,string string [,int limit])
+		array preg_grep( string pattern , array input ) 从数组input按照pattern规则查找符合要求的，并且返回结果存储在一个数组		
+		int preg_match/preg_match_all( string pattern , string subject ,[ ,array matches]) 返回匹配的次数 preg_match只匹配一次就结束 所以返回的为0或1. 第三个参数存在那么将匹配的值存储在matches数组。preg_match_all匹配所有符合的
+		string preg_quote( string str [ , string delimiter]) 将所有特殊字符进行转义。第二个参数存在那么将第二个参数值也进行转义  功能类似于 addslashes
+		mixed preg_replace( mixed pattern , mixed replacement , mixed subject [ ,int limit] )
+		* preg_replace_callback( mixed pattern , callback callback ,mixed sunject [ ,int limit]) callback回调函数
+		preg_split( string pattern , string subject [, int limit])

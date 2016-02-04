@@ -1,0 +1,68 @@
+
+
+约定：
+	1. lampp集成环境
+	2. sudo apt-get install php5-fpm
+	3. cd /etc/php5/fpm/
+	4. sudo vim fpm1.conf  启动多个监听端口 监听9002,配置见13步骤
+	5. 在fpm文件夹下面，存在着php5-fpm.conf 那么这个就是根配置文件
+	6. cd pool.d
+	7. sudo vim www.conf
+	8. 将listen 改成具体的端口，例如：127.0.0.1：9001 或者找到默认的配置端口文件( 猜想，因为默认的是指定一个文件 )
+	9. sudo service php5-conf start 启动fpm，这时监听的端口是9001
+	10. 启动fpm还不够，还必须启动nginx。在nginx中的配置也要写成对应的9001
+	11. sudo /etc/init.d/nginx start 
+	12. 至此，基本的php请求能够通过fpm分发了。但是如何让启动多个fpm监听不同的端口提供一个项目分发呢？即负载均衡的实现
+	13. 前面提到的fpm1.conf 写的内容为：
+		[global]
+		pid = /var/run/php-fpm1.pid
+		error_log = /var/log/php-fpm1.log
+		log_level = notice
+		
+		[www]
+		
+		listen = 127.0.0.1:9002
+		listen.backlog = 1024
+		user = www-data
+		group = www-data
+		pm = dynamic
+		pm.max_children = 2000
+		pm.start_servers = 10
+		pm.min_spare_servers = 5
+		pm.max_spare_servers = 200
+		pm.max_requests = 120000
+		request_terminate_timeout = 120
+		request_slowlog_timeout = 2s
+		slowlog = /var/log/php-fpm1.log.slow
+	14. 启动fpm1.conf : start.sh /usr/sbin/php5-fpm -y /etc/php5/fpm/fpm1.conf 即监听9002
+		停止fpm1.conf：kill -9 `ps -ef |grep php-fpm |grep -v grep |awk '{ print $2 }'`
+	15. 如何实现让一个项目同时将php请求分发给9001和9002
+	-------------------------------------------------------------------------------------------------------------
+	负载均衡的实现
+	16. 在nginx的根配置文件下，在http下编写upstream
+		upstream account {
+			service 127.0.0.1:9001;
+			service 127.0.0.1:9002;
+		}
+	17. 在vhost的项目配置文件下，在fastcgi_pass 配置
+		fastcgi_pass account;
+	18. 跟踪请求分发的日志，cd /var/log/nginx  ; tail -f access.log 可以查看是轮循接收请求的。9001 9002 9001 ... 
+	19. 但是，nginx还是可以利用比重对fpm进行比例的请求分发。配置weight
+		 upstream account {
+			service 127.0.0.1:9001 weight=1;
+			service 127.0.0.1:9002 weight=2;
+		}
+
+用sudo /etc/init.d/php5/fpm start 能够启动 但是却不能够正常关闭
+但是 sudo service php5-fpm start 能够正常启动
+sudo service php5-fpm stop 能够正常关闭
+
+修改www.conf文件，将listen写成具体的ip端口;
+或者找到对应的listen文件，然后编辑( 没有实现 猜想 )
+
+
+
+----------------------------------------------------------------
+地址：解析php5-fpm 找不到这个命令的原因
+http://www.cnxct.com/php5fpm-start-with-service-method-was-changed-on-ububtu-server-1404/
+----------------------------------------------------------------

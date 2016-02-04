@@ -1,0 +1,12 @@
+mktime() 返回时间戳
+int mktime ([ int $hour = date("H") [, int $minute = date("i") [, int $second = date("s") [, int $month = date("n") [, int $day = date("j") [, int $year = date("Y") [, int $is_dst = -1 ]]]]]]] )
+	时间戳：有效的时间戳为格林威治时间1901年12月13日20：45：54 ～ 2038年1月19日03：14：07
+	时间戳是一个长整数，包含了从UNIX纪元(1970年1月1日)到给定时间的秒数
+date("Y-m-d",mktime() )
+date("H:i:s",mktime() )
+time() 到当前时间的时间戳
+array getdate ([ int $timestamp = time() ] )
+strtotime( string time [, int now]) 数字越小 表示越早
+倒计时 ceil( ( $time2-$time1 )/3600 ) 小时 ceil( ( $time2-$time1)/86400) 天数
+float ceil( float value) 取整函数 返回不小于value的最小整数
+string microtime(void)

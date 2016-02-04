@@ -1,0 +1,55 @@
+cookie
+	cookie是保存在客户端上面的数据，可以利用cookie跨页面传递数据，记录访客信息，将查看的intenet页面暂存在cookie临时文件，提高以后浏览的速度
+	bool setcookie( string name [,string value [,int expire [ ,string path [ ,string domain [,int secure]]]]])
+		name : cookie的变量名
+		value : cookie的值
+		expire : cookie的失效时间，如果不设置，那么永久有效。如果设置为0,那么将会删除cookie
+		path : cookie在服务器端的有效路径，如果为/，那么在这个那个domain下都有效
+		domain : cookie的有效域名
+		secure : 指明cookie是否通过安全的https，值为0 或 1
+	setcookie( $key , $value , $time+3600 ) 时间为1小时 时间s为单位
+	setcookie( $key , '' , $time-3600 ) 清空cookie
+	print_r( $_COOKIE );
+	setcookie( cookie[one] , $value , time+300 )
+	setcookie( cookie[two] , $value , time+300 )
+	setcookie( cookie[three] , $value , time+300 )
+	print_r( $_COOKIE['cookie'] );
+	
+	疑问：
+		cookie 书上所说：如果不设置失效时间那么永久有效，又说不设置失效时间，就表示它的生命周期就为浏览器会话期间，称为会话cookie。前后不一致
+	探索：
+		1. 在test/test 下面 setcookie( 'test','test',time()+300 ); echo $_COOKIE['test']; 输出test
+			在upload/index 下面echo $_COOKIE['test']; 不会输出
+		2. 在test/test 下面 setcookie( 'test','test',time()+60,'/'); 在upload/index 下面能够获取到test
+		3. 在test/test 下面 setcookie( 'test','test' );一直检索看是否能够获取value。能一直获取value
+	解答：
+		在探索完之后的解释：不设置失效时间，是永久的，也是会话cookie，因为它只在当前的会话中是永久的，一旦当前的会话cookie关闭即失效。
+	
+session
+	bool session_start( void );
+	$_SESSION['name']	='pzr'; echo $_SESSION['name'];
+	session_id(); 每个session都有一个session_id,此时获取的是随机的
+	session_id( $value ); echo $_session_id(); 设置session_id 并且获取
+	删除单个会话：unset( $_SESSION['name'] );
+	千万不可 : unset( $_SESSION ); 这是禁用session，会使session在项目中失效
+	删除多个会话：$_SESSION=array();
+	结束当前会话：session_destroy();
+	
+	sessioin设置时间
+	session_set_cookie_params( 60 ); session_start(); $_SESSION['name']='pzr'; 设置失效时间为1分钟 
+		session_set_cookie_param 函数必须在session_start()之前调用，不推荐使用，在某些浏览器会出现问题。推荐手动设定时间。
+	session_start(); setcookie( session_name(),session_id(),time()+60); $_SESSION['name']='pzr';
+	
+	session 缓存
+	session_cache_limiter('private');
+	$cache_limiter = session_cache_limiter(); // 开启客户端缓存
+	session_cache_expire( 30 );
+	$cache_expire = session_cache_expire(); //设置客户端缓存时间
+	session_start();
+	echo $cache_limiter;
+	echo $cache_expire;
+	
+	session数据库存储
+	不详细讲述，见p209 见account项目的session/dbhandler
+	 
+	

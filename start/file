@@ -1,0 +1,77 @@
+打开/关闭文件
+	resource fopen( string filename , string mode [ , use_inlude_path [ , resource content ]])  mode打开文件的类型，为了防止不同操作系统所带来的结束符不同，建议使用mode以b结束。例如r+b,wb...
+	bool fclose( resource handle ) 
+
+读取文件
+	1. 读取整个文件
+		(1) int readfile( string filename )
+			使用readfile，不需要fopen,不需要echo，不需要fclose，会将读取的内容缓冲到输出缓冲。
+		(2) array file( string $filename )
+			按行读取文件，返回的是数组
+		(3) string file_get_contents( string filename [,bool use_include_path [ , resource $context [ , int offset [ , int maxlen]]]] );
+			将文件读取到字符串中。适用于读取二进制文件，是文件读取到字符串的首选
+			
+	2. 读取一行数据
+		(1) string fgets( string filename [, int len])
+			文件指针必须是有效的，必须指向由 fopen() 或 fsockopen() 成功打开的文件(并还未由 fclose() 关闭)。
+		(2) string fgetss( string filename [, int len [, string allowable_tags]])
+			过滤读取内容中的html和php标签，第三个参数指明哪些参数不被过滤
+
+	3. 读取一个字符
+		(1) string fgetc( resource handle)			
+			读取字符，如果遇到eof返回false
+		(2) string fread( resource handle , int len )
+			读取指定长度的字节到字符串
+		
+写入文件
+	1. int fwrite( resource handle , string string [, int len]) 或者别名fputs()
+		将string写入文件
+	2. file_put_contents( string filename , string data [ , int flags]  )
+		flags 写入文件的格式：FILE_USE_INCLUDE_PATH , FILE_APPEND(追加内容) , LOCK_EX(独占锁定)
+		
+其他函数
+	1. filesize( string filename )
+	2. pathinfo( string name [ , int option ] )
+	3. copy( string path1 , string path2)
+	...
+	
+---------------------------------------------------------------------
+目录操作		
+	打开关闭目录
+		resource opendir( string path )
+		void closedir( resource handle )
+	浏览目录
+		array scandir( string directory [ , int sorting_order])
+		is_dir( $path ) 判断是否为目录
+	操作目录
+		bool mkdir( string pathname )
+		bool rmdir( string dirname )
+		string getcwd( void ) 取得当前的工作目录
+		bool chdir( string directory ) 改变当前目录为directory
+		disk_free_space( string directory ) 返回可用空间
+		disk_total_space( string directory )
+		rewinddir( resource handle) 将指定的目录重新指定到目录的开头
+		string readdir( resource handle) 返回目录中下一个文件的文件名，必须是由opendir函数打开的资源文件
+				
+文件指针
+	bool rewind( resource handle ) 将文件handle的指针设为文件流的开头
+	int fseek( resource handle , int offset [ , int whence])
+	bool feof( resource handle )
+	int ftell( resource handle ) 返回当前指针的位置
+	bool flcok( resource handle , int operation ) 锁定文件
+	
+	
+文件上传
+	$_FILES 预定义变量 是一个二维数组
+	$_FILES[filename][name] 文件名
+	$_FILES[filename][size]  文件大小
+	$_FILES[filename][tmp_name] 文件上传时，首先存在临时文件，该变量为临时文件名
+	$_FILES[filename][type] 上传文件类型
+	$_FILES[filename][error] 存储了上传文件的结果。如果值为0,表示上传成功
+	
+	bool move_uploaded_file( string filename , string destination ) 将上传文件存储到指定的位置。 成功返回true
+		filename 是上传文件的临时文件名
+	
+	
+	
+	

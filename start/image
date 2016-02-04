@@ -1,0 +1,13 @@
+画图
+1. imagecreate( $width , $height); 画布生成
+2. imagecolorallocate( $img , int , int ,int ); 画布上色
+3. imagettftext( $img , $fontsize, $angle , $x , $y , $color , $fontfile , $text) 画布写字 angle 角度
+4. imagegif( $img ) imagejpeg( $img ); imagepng( $img ); 输出图片
+
+添加划线
+5. imagesetthickness( $img , int weight); 线粗
+6. imagearc( $img , $x,$y  ,  $w,$h  ,  $s,$e ,  $color   ); 划线 顺时针以x,y为圆心从s角度到e角度，w宽h高颜色color划弧线	
+
+imagettftext 和 imagestring 比较
+	imagestring( $img , $font , $x,$y , $text , $color) 水平显示 左上角为起始位置0.0
+	imagettftext 为左下角起始位置
