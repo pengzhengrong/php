@@ -9,7 +9,7 @@
 		(2) array file( string $filename )
 			按行读取文件，返回的是数组
 		(3) string file_get_contents( string filename [,bool use_include_path [ , resource $context [ , int offset [ , int maxlen]]]] );
-			将文件读取到字符串中。适用于读取二进制文件，是文件读取到字符串的首选
+			将文件读取到字符串中。适用于读取二进制文件，是文件读取到字符串的首选,也可以读取远程文件
 			
 	2. 读取一行数据
 		(1) string fgets( string filename [, int len])
