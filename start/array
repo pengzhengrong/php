@@ -2,3 +2,5 @@ array_search( mixed $needle ,array $haystack [ ,bool $strict=false]) 在数组$h
 array_pop( array $arr )
 array_push( array $arr , mixed $var [ , $var2])
 array_unique( array $arr [, int $sort_flags = SORT_STRING ]  ) 删除数组中重复的元素
+array array_slice ( array $array , int $offset [, int $length = NULL [, bool $preserve_keys = false ]] ) 切割数组
+array array_splice ( array &$input , int $offset [, int $length = 0 [, mixed $replacement ]] )  插入或者删除数组元素

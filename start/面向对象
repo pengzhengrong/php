@@ -1,0 +1,29 @@
+关键字：public private protected
+public : 内部 外部 子类 
+private: 内部
+protected : 子类，内部
+
+final 常量
+
+static：静态区域
+
+self：内部调用静态类使用
+::  :格式 关键字::变量名/常量名/方法  
+	关键字：parent 访问父类的成员变量，常量，成员方法。self 访问本类静态方法和常量。类名 访问本类变量，常量，方法
+$this : 代表本身，只能在内部使用。如果类在未实例化之前，并不知道实例化后的名称，因此$this代表的就是本身的意思。
+  
+abstract：抽象类
+	抽象类，把具有相同属性的对象抽象出来，然后具体的对象可以实现这个抽象类，并且加上自己的特性。
+interface：接口
+	子类可以实现多个接口，但是只能单继承。简化对象，类的创建，增加了代码的重用性。
+	
+关于jvm
+	java的跨平台性，主要的一个原因是jvm。java的运行都是在jvm当中运行，所以和操作系统没有关系。
+	内存  栈  方法区 ：
+		对象的创建主要在内存中，而对象的引用则在栈中存储。方法区中会保存对象的各种信息。 
+		
+魔术方法：
+	__get( $key ) , __set( $key , $value ) , __construct() , __clone() , __call( $method , $params ) , __toString() ， __sleep() , __wakeup() 
+	__autoload() 函数能够自动加载未初始化而现在需要初始化的资源
+	
+instanceof : objcetName instanceof className

@@ -1,0 +1,40 @@
+要明白一些函数的内在
+
+1. 连接数据库
+	mysql_connect 
+	mysql_pconnect
+	mysqli_connect 别名 mysqli::__construct
+2. 选择db
+	mysql_select_db()
+	mysqli_select_db()
+	mysqli::select_db()
+3. 执行sql
+	mysql_query()
+	mysqli_query()
+	PDO::query()
+	mysqli::query()
+4. 关闭结果集
+	mysql_free_result( $result )
+	mysqli_free_result( $result )
+	mysqli_result::free( void )
+5. 关闭数据库
+	mysql_close( $link )
+	mysqli_close( $link )
+	mysqli::close( void )
+	
+	
+	
+	
+连接mysql函数
+	resource mysql_connect ([ string $server [, string $username [, string $password [, bool $new_link [, int $client_flags ]]]]] )
+	mysqli::__construct ([ string $host = ini_get("mysqli.default_host") [, string $username = ini_get("mysqli.default_user") [, string $passwd = ini_get("mysqli.default_pw") [, string $dbname = "" [, int $port = ini_get("mysqli.default_port") [, string $socket = ini_get("mysqli.default_socket") ]]]]]] )
+	
+	区别：mysqli 可以是过程化的风格，也可以是面向对象。
+	
+	
+	ini_get( string $key) 获取php.ini 的配置值
+	
+	
+	
+	
+	

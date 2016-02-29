@@ -1,0 +1,82 @@
+1. 什么是xml
+	扩展性标记语言	
+	html 的扩展
+	xml声明 处理指令 注释 元素 属性 命名空间 
+2. 创建xml对象
+	(1) simplexml_load_file( $filename ) 将xml的文件，保存在内存当中
+	(2) simplexml_load_string( $xml_string ) 将xml格式的字符串，保存在内存当中
+	(3) simplexml_load_dom( $dom ) 将由dom对象创建的xml 保存在内存当中
+3. xml对象的操作API
+	array $xml->children() 访问xml的所有标签
+	array $xml->children()->children() 访问标签的结构
+	array $xml->children()->attributes() 访问标签的属性
+	string $xml['name'] 访问xml的根元素的属性name
+	string $xml->book[0]->computer 访问book元素的子元素值
+	string $xml->book[1]->computer['name'] 访问book元素的子元素name属性的值
+	$xml['name'] = 'name'; 修改xml根元素属性name的值为name，
+		注意：但是修改完了之后，	只是把xml的内存中的对象修改了，并非是修改了源文件。因此还需要保存输出到源文件。
+	mix $xml->asXML() 格式化对象xml，然后即可进行保存
+4. 动态创建xml API
+	DOM对象可以动态创建xml
+	$dom = new Document( '1.0' , 'utf-8'); 创建dom对象
+	$root_ele  = $dom->createElement('root-ele'); 创建根节点
+	$dom->append( $root_ele ) 将创建的根节点添加到DOM对象
+	$dom->createAttribute('name') 创建节点的属性
+	$dom->createTextNode('pzr') 创建一个属性值 name='pzr' 也可以添加到元素值
+	
+5. 利用以上的api，即可对xml进行操作。
+
+学习不思考只是记忆，只有不停的推断才能成为自己的思维
+1. DOM对象的API有哪些？
+
+XML 和 ajax
+1. ajax的运用
+	$.ajax(
+		url:'',
+		type:'post',
+		data:'params',
+		dataType:'json',
+		success:function( date ){}
+	);
+
+合上php这本书，你学了什么？
+1. 对文件的操作
+	(1) 上传 
+	(2) 读取文件
+	(3) 写入文件
+	(4) 对整个文件操作有3个方法
+		file_get_contents()
+		file()
+	(5) 对行操作有2个方法
+		gets getss
+	(6) 对字符操作有2个方法
+		getc 
+2. 对img的操作
+	(1) 生成验证码
+	(2) 生成统计图
+3. 对字符串的操作API
+4. 对数组操作API
+5. 对数据库操作API
+6. SMARTY 框架
+7. cookie 和 session
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
