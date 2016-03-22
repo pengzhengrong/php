@@ -1,0 +1,112 @@
+版本 3.1.3 完整版
+输入http://think.test.com:8896/index.php?m=Show&a=index 如何找到的控制器？
+  |-index.php
+    |--include ThinkPHP.php
+      |-- RUNTIME_FILE=APP_PATH.'Runtime/=./Index/Runtime/ 
+        |-- include ./Index/Runtime/~runtime.php  ( not debug) 
+      |--   include ThinkPHP/Common/runtiime.php    
+        |--  Think::start();
+          |--  Think::buildApp();
+            |--  $mode   = include MODE_PATH.strtolower(MODE_NAME).'.php';
+            |--  MODE_PATH==.ThinkPHP/Extend/Mode/
+            |--  autoload( $class ); & IndexAction.class.php & App::run();
+          |--  App::run();
+            |--  App::init();
+            |--  App::exec();
+
+DB MANAGE
+|-- $db = M('user'); //实例化一个数据库对象
+|-- $result = $db->select();
+|-- $id = $db->date( $date )->add();
+|-- $count = $db->where( $where )->delete();
+|-- $db->where( $where )->find();
+|-- $db->save( $date );
+
+
+|-- PUBLIC  __PUBLIC__ is not defined, but it's really has value. 
+|-- Public  ==  __PUBLIC__ 
+
+|-- Common  used to define users'  function , but the file name must be called common.php . if not ,you should config  the  LOAD_EXT_FILE=>"ffile_anme"
+|--   if you only want to  use template , you can  called like this'load(@.f unction)'
+
+|--  url= location:port/ index.php/Index/index/uid/1/uname/pzr
+|-- I('uname')  ; I("get."); I("post.");
+|-- $this->_get()  ;  $this->_post();  $this->display();
+|-- U( path ) ; U("/Index/index") ;  ==>   /index.php/Index/index.html
+|-- U( path ,  Array ) ; $param = array("uid"=>"1","uname"=>"pzr","passwd"=>"123456");  /index.php/Index/index/uid/1/uname/pzr/passwd/123456.html
+|-- U( path , Array , true|false|string )  true?/index.php/Index/index/uid/1/uname/pzr/passwd/123456.html[.string] : /index.php/Index/index/uid/1/uname/pzr/passwd/123456
+|-- U( path , Array , true|false , true|false ) ; 4param: redirect?   true?redirect:not;  
+|-- U( path , Array , true|false|string , true|false , true|false);  
+	5param:  true?http://think.test.com:8896/index.php/Index/show/uid/1/uname/pzr/passwd/123456.html:/index.php/Index/show/uid/1/uname/pzr/passwd/123456.html
+
+
+IN THE HTML
+|-- html:xt //init html 
+|-- {:rand(1,5)}  call function  
+|-- <foreach  name="arr_name" item="v">  {$v.name} {v.id}  </foreach>  --> this is explained as <?php  foreach( $arr_name as $v)   ?> 
+	 if it's a Object ,output as $v->name, if it's a array ,output as $v.name
+|-- {$v.time|date='Y-m-d H:i',###} --> {###} == {$v,time} itself , and {|} means use function
+|-- $this->assign( key , value);  html : {$key}
+|-- $this->key = value;  same as $this->assign(key , value);
+|-- $this->success(  message , redirect);
+|-- $this->error( message [, redirect]);
+|-- $this->redirect( $url );
+|-- $this->display(); //default Index/index.html;  
+|-- $this->display("show");  // Index/show.html;
+|-- halt( message ); === _404( message);   ==> <html>{$e['message']}</html>
+
+
+CONFIG MANAGE
+|-- 惯例配置  -> 项目配置 -> 调试配置 -> 分组配置 -> 模块配置 -> 操作(动态)配置 ( 优先级依次提高)
+|-- 在ThinkPHP 目录下有一个根配置文件，不过这个配置文件的优先级最低
+|-- APP_GROUP_LIST=>'Index,Admin', //used to GROUPLIST
+|-- DEFAULT_GROUP=>'Index',  // used to GROUP LIST
+|-- URL_MODEL = 0|1|2|3,
+|-- TMPL_VAR_IDENTIFY=>'array' ,// defined inner html  only read array not object
+|-- TMPL_FILE_DEPR =>'_',  // means controller find tpl  by '/index.php/Index/Index_index.html'; if values '/' ,find by '/index.php/Index/Index/index.php'
+|-- TMPL_EXCEPTION_FILE => './Public/Tpl/error.php' , // used to your error page  
+|-- TMPL_PARSE_STRING => array(  '__PUBLIC__'=>"__ROOT__/APP_NAME/Tpl/"),
+|-- SESSION_TYPE =>'db', // save session to db , call action extend/driver/session/ sessionDb.class.php
+|-- SESSION_TYPE => 'Redis', // if set type as redis, then call action extend/driver/session/sessionRedis.class.php .inner this class php you can define your own method.
+|-- REDIS_HOST => '127.0.0.1',
+|-- REDIS_PORT => 6397,
+
+GROUP LIST
+|-- Home
+  >|-- Lib
+     |-- Action
+       |-- Admin
+         |-- IndexAction.class.php
+       |-- Index
+         |-- IndexAction.class.php
+    >|-- Conf
+         |-- conf.php  //public to Admin & Index Action
+           |-- Admin
+             |-- config.php  //private to Admin
+           |-- Index
+             |-- config.php  // private to Index
+    >|-- Common
+         |-- common.php  // public to All
+         |-- Admin
+           |-- function.php  // private to Admin and the name must be function.php
+         |-- Index
+           |-- function.php  // the same to Admin
+|-- index.php  //rout
+
+URL 
+think.test.com:8896/index.php  -->  Index/IndexAction.class.php/index method
+think.test.com:8896/index.php/Admin  -> Admin/IndexAction.class.php/index method
+think.test.com:8896/home.php/Admin/Index/index -> Admin/IndexAction.class.php/index method
+
+API
+|-- IS_POST === $this->isPost();
+|-- IS_AJAX
+|-- IS_GET
+|-- I('post.'); I('get.'); I('code','','md5');
+|-- C('config_name');
+|-- F( file_name , date , file_path ); // this is a write method
+|-- $date = F( file_name , '' , file_path ); // this is a read method
+|-- echo json_encode( array('status'=>'0')); // retuan a json 
+|-- $this->ajaxReturn( array('status'=>0),'json');  // return a json to ajax
+|-- import('ORG/Util/Image');  // Image::buildImageVerify(4,5,'png');  $_SESSION['verify'];
+|-- function _initialize(){} // auto run method

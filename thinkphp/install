@@ -1,0 +1,23 @@
+1. 怎么配置nginx 让它能够支持PATH__INFO
+	server{
+        listen 8896;
+        server_name    think.test.com;
+        index index.html index.htm index.php;
+        root /home/pzr/workspace/think;
+        client_max_body_size 200m;
+		access_log /var/log/nginx/think;
+        access_log  /var/log/nginx/logs/think/access.log;
+        error_log  /var/log/nginx/logs/think/error.log;
+        location ~ \.php {
+                fastcgi_pass   account;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
+				fastcgi_split_path_info ^(.+\.php)(.*)$;
+				fastcgi_param  PATH_INFO $fastcgi_path_info;
+              	include        fastcgi_params;
+        }
+
+
+        
+}
+	

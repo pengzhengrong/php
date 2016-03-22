@@ -47,6 +47,7 @@ XML 和 ajax
 	(4) 对整个文件操作有3个方法
 		file_get_contents()
 		file()
+		readfile()
 	(5) 对行操作有2个方法
 		gets getss
 	(6) 对字符操作有2个方法

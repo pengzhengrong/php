@@ -16,3 +16,11 @@ smarty框架给我的感觉：智能化，能够自行解析自定义函数方�
 学习smarty：2周
 开发手册：2周
 
+view : 是独立的
+controller : 控制层 控制层 只做响应请求 并且把响应的结果返回给请求
+module ： 模块层 每个模块对应的业务操作在此，以供控制层的调用
+
+java的3层架构：dao层 service层 controller层
+	dao层的设计，可以实现通用
+	service层实现会通过接口的实例化，但是php中呢？似乎对service的分层并不是很明确 
+

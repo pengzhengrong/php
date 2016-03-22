@@ -1,0 +1,7 @@
+mixed call_user_func ( callable $callback [, mixed $parameter [, mixed $... ]] )
+bool function_exists ( string $function_name )
+array get_extension_funcs ( string $module_name )   返回函数模块的扩展数组
+bool dl ( string $library ) 运行时载入一个php扩展
+void __autoload ( string $class ) 尝试加载未定义的类
+	spl_autoload_register() 提供了一种更加灵活的方式来实现类的自动加载。因此，不再建议使用 __autoload() 函数，在以后的版本中它可能被弃用
+	bool spl_autoload_register ([ callable $autoload_function [, bool $throw = true [, bool $prepend = false ]]] )

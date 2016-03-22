@@ -11,3 +11,10 @@
 imagettftext 和 imagestring 比较
 	imagestring( $img , $font , $x,$y , $text , $color) 水平显示 左上角为起始位置0.0
 	imagettftext 为左下角起始位置
+	
+	
+imageline 画一条直线
+
+imagefilledrectangle  画一矩形
+
+bool imagefilledrectangle ( resource $image , int $x1 , int $y1 , int $x2 , int $y2 , int $color )
